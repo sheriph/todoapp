@@ -1,24 +1,29 @@
 import React from "react";
+import "../../src/w3.css"
 
-const FormButton = ({handleClick}) => (
-  <div>
-    <div className="w3-panel w3-yellow w3-center">
-      <h1>My ToDo App</h1>
-    </div>
-    <div className="w3-container w3-margin-bottom w3-light-gray" >
-      <form>
-        <label>
-          What would you like to do?
-        </label>
-        <input
-          id = "input"
-          className="inputBox w3-input w3-border w3-round"
-          type="text"
-        />
-        <input type="submit" value="Enter" onClick = {handleClick} />
-      </form>
-    </div>
+
+const FormInput = ({value, handleChange, handleSubmit  })=> (
+    <div className="w3-container">
+    <form
+      className="w3-container w3-margin-top"
+      onSubmit={handleSubmit}
+    >
+      <label>Enter to do events</label>
+      <input
+        className="w3-input w3-border w3-light-grey"
+        type="text"
+        name="todo"
+        value={value}
+        onChange={handleChange}
+      />
+      <input
+        className="w3-buton w3-circle w3-black"
+        value="+"
+        type="submit"
+        name="submit"
+      />
+    </form>
   </div>
-);
+)
 
-export default FormButton;
+export default FormInput;

@@ -1,25 +1,61 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
-import "./w3.css";
-import UseStickyState from "../src/components/useStickyState.jsx";
-import FormButton from "./components/formInput";
-import TodoItem from "./components/todoitem";
+import "../src/w3.css";
+import "react-datepicker/dist/react-datepicker.css";
+import { Switch, Route } from "react-router-dom";
+import HomePage from "./pages/homePage/homepage";
+import Header from "./components/header";
+import SignInSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up-Page.jsx";
+import {
+  auth,
+  createUserProfileDocument,
+} from "./pages/firebase/firebaseutility";
 
-function App() {
-  const [state, setState] = UseStickyState([], "storageName");
-
-  function handleClick(e) {
-    e.preventDefault();
-    if (e.target.previousElementSibling.value) {
-      setState([...state, e.target.previousElementSibling.value])
-        e.target.previousElementSibling.value = "";
-    }
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentUser: null,
+    };
+  }
+  unsubscribeFromAuth = null;
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      const userRef = await createUserProfileDocument(user);
+      if (!userRef){ return }
+      try {
+        userRef.onSnapshot((snapShot) => {
+          this.setState(
+            {
+              currentUser: { id: snapShot.id, ...snapShot.data() },
+            },
+            () => console.log(this.state.currentUser)
+          );
+        });
+      } catch (err) {
+        console.log("App -> componentDidMount -> err", err);
+      }
+    });
   }
 
-  return (
-    <div className="App">
-    <FormButton handleClick = {handleClick} />
-    <TodoItem state = {state} setState = {setState} />
-    </div>
-  );
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  currentUserReset = ()=>{
+    this.setState({currentUser: null})
+  }
+  render() {
+    return (
+      <div className="w3-container">
+        <Header currentUserReset = {this.currentUserReset} currentUser={this.state.currentUser} />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/signin" component={SignInSignUp} />
+        </Switch>
+      </div>
+    );
+  }
 }
+
 export default App;

@@ -239,6 +239,23 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .cursor {
     cursor: pointer;
 }
-.nodisplay {
-    display: none;
+
+.iconright {
+    float: right;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.fullbutton {
+    width: 100%;
+}
+.modalpop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 20%;
+    height: fit-content;
+}
+.bigspan {
+    font-size: large;
+    color: yellow;
 }
