@@ -4,7 +4,7 @@ import { auth } from "../pages/firebase/firebaseutility";
 
 const Header = ({ currentUser, currentUserReset }) => (
   <div className="w3-bar w3-border w3-green w3-xlarge">
-    <Link to="/home" className="w3-bar-item w3-button">
+    <Link to="/" className="w3-bar-item w3-button">
       HOME
     </Link>
     {!currentUser ? (

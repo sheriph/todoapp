@@ -50,7 +50,7 @@ class App extends React.Component {
       <div className="w3-container">
         <Header currentUserReset = {this.currentUserReset} currentUser={this.state.currentUser} />
         <Switch>
-          <Route exact path="/home" component={HomePage} />
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/signin" component={SignInSignUp} />
         </Switch>
       </div>
